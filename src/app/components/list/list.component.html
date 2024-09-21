@@ -1,0 +1,57 @@
+<div class="list-container">
+  <h2 class="list-title">Employee List</h2>
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees$ | async">
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.position }}</td>
+        <td>{{ employee.department }}</td>
+        <td class="btns">
+          <button (click)="openEditModal(employee)" class="btn btn-warning btn-lg">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="deleteEmployee(employee.email)" class="btn btn-danger btn-lg">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div *ngIf="isModalOpen" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Edit Employee</h2>
+    <form (ngSubmit)="updateEmployee()">
+      <div class="form-group">
+        <label>Name:</label>
+        <input [(ngModel)]="selectedEmployee.name" name="name" required class="form-input"/>
+      </div>
+      <div class="form-group">
+        <label>Email:</label>
+        <input [(ngModel)]="selectedEmployee.email" name="email" required class="form-input"/>
+      </div>
+      <div class="form-group">
+        <label>Position:</label>
+        <input [(ngModel)]="selectedEmployee.position" name="position" required class="form-input"/>
+      </div>
+      <div class="form-group">
+        <label>Department:</label>
+        <input [(ngModel)]="selectedEmployee.department" name="department" required class="form-input"/>
+      </div>
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
+  </div>
+</div>
